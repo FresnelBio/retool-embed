@@ -12,8 +12,57 @@
                 height: 100vh;
             }
         </style>
+        <script>
+            function setGene(selectObject) {
+                const iframe = document.getElementById('embed')
+                const src = iframe.getAttribute('src')
+                const value = selectObject.value;
+                const url = updateUrlHash(src, 'gene_select', value)
+                iframe.setAttribute('src', url)
+                iframe.reload()
+            }
+
+            function updateUrlHash(baseUrl, key, value) {
+                // Create a URL object from the base URL
+                const url = new URL(baseUrl);
+                
+                // Parse the existing hash into a URLSearchParams object
+                const hashParams = new URLSearchParams(url.hash.slice(1)); // Remove the '#' from the hash
+
+                // Update or add the key-value pair in the hashParams
+                hashParams.set(key, value);
+
+                // Update the hash in the URL object
+                url.hash = hashParams.toString();
+
+                // 
+                url.searchParams.set('t', Date.now());
+
+                // Return the updated URL as a string
+                return url.toString();
+            }
+        </script>
     </head>
     <body>
-        <iframe id="embed" src="https://fresnelbio.retool.com/p/localization-and-model-systems" />
+        <h1>Example of how to pass in a selected gene</h1>
+        <select onChange="setGene(this)">
+            <option value="1">A1BG</option>
+            <option value="3">A1CF</option>
+            <option value="4">A2M</option>
+            <option value="6">A2ML1</option>
+            <option value="9">A2MP1</option>
+            <option value="10">A3GALT2</option>
+            <option value="11">A4GALT</option>
+            <option value="12">A4GNT</option>
+            <option value="13">AAAS</option>
+            <option value="14">AACS</option>
+            <option value="15">AACSP1</option>
+            <option value="16">AADAC</option>
+            <option value="17">AADACL2</option>
+        </select>
+
+        <h2>Drugability module from Fresnel in an iFrame</h2>
+        <!-- to set the default value for the gene_select, you can supply the fresnel_gene_key as in the url hash  -->
+        <iframe id="embed"  src="https://fresnelbio.retool.com/p/localization-and-model-systems#gene_select=1" />
     </body>
 </html>
