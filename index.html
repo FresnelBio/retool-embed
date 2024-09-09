@@ -35,7 +35,8 @@
                 // Update the hash in the URL object
                 url.hash = hashParams.toString();
 
-                // 
+                // Hash alone doesn't automatically update the iframe. 
+                // You must update a query string parameter so we are updating the timestamp. 
                 url.searchParams.set('t', Date.now());
 
                 // Return the updated URL as a string
